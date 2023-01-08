@@ -19,8 +19,8 @@ var app *config.AppConfig
 
 var pathToTemplates = "./templates"
 
-// NewTemplates sets the config for template pkg
-func NewTemplates(a *config.AppConfig) {
+// NewRenderer sets the config for template pkg
+func NewRenderer(a *config.AppConfig) {
 	app = a
 }
 
@@ -31,7 +31,9 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 	td.CSRFToken = nosurf.Token(r)
 	return td
 }
-func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
+
+// Template renders template using html/template
+func Template(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
 	var tc map[string]*template.Template
 	if app.UseCache {
 		tc = app.TemplateCache
